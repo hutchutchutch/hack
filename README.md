@@ -51,7 +51,7 @@ hackistan/
 ### Key Directories
 
 1. **`apps/frontend/`**  
-   - **Vite** for the UI.
+   - **Vite** for the UI with React and TypeScript.
    - **Dockerfiles**:
      - `Dockerfile.dev` for local dev with hot reload.
      - `Dockerfile` for production builds.
@@ -59,10 +59,26 @@ hackistan/
      - **Landing page**: Pitches global AI engineer community for hackathons.
      - **User dashboard**: Show user's projects, testimonials, skillsets, collaborator list.
      - **Hackathon listing**: Show past hackathons with finished projects and track winners, plus the current live hackathon accepting submissions.
-     - **Project rating**: Allow users to leave feedback on design, functionality, story, etc.
+     - **Active Hackathon**: 
+       - **Overview**: High-level information about the ongoing hackathon with featured tracks and recent submissions.
+       - **Tracks**: Detailed information about each track including prizes and requirements.
+       - **Submissions**: Browsable list of all submissions with filtering by track and sorting options.
+       - **Sponsors**: Information about sponsoring organizations by tier (platinum, gold, silver, bronze).
+       - **Review**: Detailed project view with ability to submit ratings and feedback.
+     - **Project rating**: Allow users to leave feedback on innovation, implementation, impact, and presentation.
+   - Services layer for API communication with the backend.
+   - Type definitions that mirror backend data models.
 
 2. **`apps/backend/`**  
    - **Express.js** with TypeScript.  
+   - **Neo4j Integration**:
+     - Connection management with the Neo4j database.
+     - Models for hackathons, tracks, submissions, reviews, and sponsors.
+     - Complex graph queries for user relationships and project connections.
+   - **RESTful API**:
+     - Endpoints for retrieving hackathon information.
+     - Submission filtering and sorting.
+     - Rating and review capabilities.
    - Integrates **LangGraph** for multi-step workflows, e.g. analyzing feedback, generating queries, or orchestrating advanced logic.  
    - Connects to:
      - **AWS S3** for user-uploaded docs (like project images or PDFs).
@@ -151,16 +167,25 @@ hackistan/
    - Show each user's projects, skillsets, testimonials, and collaborators.
    - Possibly display recommendations for future hackathons or collaboration partners.
 
-2. **Hackathon Page**:
+2. **Hackathon Management**:
    - Lists past hackathons and submitted projects, with each track or category.
    - Shows the live hackathon that's currently open for submissions (start/end date, rules, etc.).
-   - Users can leave feedback or ratings (Story, Design, Function) plus open-ended comments.
+   - Users can leave feedback or ratings on innovation, implementation, impact, and presentation.
 
-3. **Ratings & Comments**:
-   - Users can see aggregate ratings for each project.
-   - Possibly the backend uses LangGraph to summarize feedback or highlight key points.
+3. **Active Hackathon Portal**:
+   - **Overview Dashboard**: Featured tracks, submission timeline, and recent project highlights.
+   - **Track Explorer**: Browse different competition categories with detailed prize information and requirements.
+   - **Submission Browser**: Filter and sort all hackathon projects, with dynamic filtering by track.
+   - **Sponsor Showcase**: Display organizations supporting the hackathon by tier with their perks.
+   - **Review System**: Detailed project pages with ability to view and leave structured feedback.
 
-4. **Landing Page**:
+4. **Ratings & Comments**:
+   - Users can see aggregate ratings across multiple dimensions.
+   - Rating summary visualizations show project strengths and weaknesses.
+   - All reviews include both quantitative ratings and qualitative feedback.
+   - Backend uses Neo4j to store and analyze rating relationships.
+
+5. **Landing Page**:
    - Showcases a global community of AI engineers, encouraging signups for hackathons.
    - Integration with social media or Google auth if desired.
 
@@ -181,15 +206,32 @@ hackistan/
 
 ---
 
-## Conclusion
+## Technology Stack
 
 This hackathon hosting platform uses:
 
-- Turborepo + pnpm for consolidated multi-app dev
-- Docker for local dev/prod builds
-- Neo4j on AWS ECS to store project, user, and hackathon relationships
-- S3 for storing user-uploaded assets (banners, docs, images)
-- OpenSearch or Neo4j vectors for advanced search with Gemini embeddings
-- LangGraph in the backend to orchestrate multi-step rating or synergy logic
+- **Frontend**: 
+  - React with TypeScript for type-safe components
+  - Vite for fast development and optimized builds
+  - React Router for navigation between hackathon features
+  - Axios for API communication with the backend
 
-By leveraging this structure, you can easily build robust hackathon management features, from user dashboards to track-based submissions, while scaling seamlessly in AWS. It's flexible for both local development and production-ready container deployments. Enjoy building your Hackathon Hosting Platform!
+- **Backend**:
+  - Express.js with TypeScript for a robust API server
+  - Neo4j database for graph-based data relationships
+  - RESTful API design with structured controllers and models
+  - Rating and review system with multi-dimensional feedback
+
+- **Infrastructure**:
+  - Turborepo + pnpm for consolidated multi-app dev
+  - Docker for local dev/prod builds
+  - Neo4j on AWS ECS to store project, user, and hackathon relationships
+  - S3 for storing user-uploaded assets (banners, docs, images)
+  - OpenSearch or Neo4j vectors for advanced search with Gemini embeddings
+  - LangGraph in the backend to orchestrate multi-step rating or synergy logic
+
+## Conclusion
+
+This platform provides a comprehensive solution for hosting and managing hackathon events. The Active Hackathon feature creates an engaging experience for participants to explore tracks, view submissions, and provide detailed feedback on projects. The Neo4j database enables powerful relationship-based queries for user connections, project similarities, and advanced rating analytics.
+
+By leveraging this architecture, you can easily build robust hackathon management features, from user dashboards to track-based submissions, while scaling seamlessly in AWS. It's flexible for both local development and production-ready container deployments. Enjoy building your Hackathon Hosting Platform!
