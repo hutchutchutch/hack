@@ -1,0 +1,9 @@
+{
+    "node_version": "20",
+    "graphs": {
+        "engagement": "./src/langgraph/engagement-graph/graph.ts:graph"
+    },
+    "ui": {
+        "engagement": "./src/langgraph/engagement-graph/ui.tsx"
+    }
+}
