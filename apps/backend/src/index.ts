@@ -9,7 +9,7 @@ import { seedDatabase } from './config/seed-data';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 4000; // Changed to 4000 to avoid conflicts
+const PORT = process.env.PORT || 4000;
 
 // Middleware
 app.use(cors());
@@ -34,9 +34,9 @@ async function startServer() {
     console.log('Seeding database...');
     await seedDatabase();
     
-    // Start server
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
+    // Start server - explicitly listening on all interfaces
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`Server running on port ${PORT} (http://localhost:${PORT})`);
     });
   } catch (error) {
     console.error('Error starting server:', error);
