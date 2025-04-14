@@ -1,0 +1,23 @@
+FROM node:18-alpine
+
+# Install development tools and pnpm
+RUN apk add --no-cache curl wget
+RUN npm install -g pnpm
+
+WORKDIR /usr/src/app
+
+# Copy package.json and pnpm-lock.yaml (if exists)
+COPY package.json ./
+COPY pnpm-lock.yaml ./
+
+# Install dependencies using pnpm
+RUN pnpm install
+
+# Copy project files
+COPY . .
+
+# Expose port
+EXPOSE 4000
+
+# Start development server with pnpm
+CMD ["sh", "-c", "pnpm exec ts-node src/index.ts"]

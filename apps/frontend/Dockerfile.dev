@@ -1,0 +1,26 @@
+FROM node:18-alpine
+
+# Install development tools and pnpm
+RUN apk add --no-cache curl wget
+RUN npm install -g pnpm
+
+WORKDIR /usr/src/app
+
+# Copy package.json and pnpm-lock.yaml (if exists)
+COPY package.json ./
+COPY pnpm-lock.yaml ./
+
+# Install dependencies using pnpm
+RUN pnpm install
+
+# Copy project files
+COPY . .
+
+# Update API_URL to point to backend service
+ENV VITE_API_URL=http://backend:4000/api
+
+# Expose port
+EXPOSE 5173
+
+# Start development server with vite directly
+CMD ["sh", "-c", "pnpm exec vite --host"]

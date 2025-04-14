@@ -1,22 +1,38 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Hackistan backend API",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test-db": "ts-node src/test-db-connection.ts",
+    "test-db-direct": "ts-node src/test-db-direct.ts",
+    "test-model": "ts-node src/test-model.ts",
+    "show-tables": "ts-node src/show-tables.ts",
+    "test-api": "ts-node src/test-api.ts",
+    "test-api-simple": "ts-node src/test-api-simple.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^5.1.0"
+    "@types/pg": "^8.11.12",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "pg": "^8.14.1",
+    "pg-promise": "^11.13.0"
   },
   "devDependencies": {
     "@langchain/core": "^0.3.43",
     "@langchain/langgraph": "^0.2.62",
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
     "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.2"
   }

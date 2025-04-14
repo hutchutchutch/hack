@@ -89,8 +89,8 @@ class HackathonController {
   // Create a review for a submission
   async createReview(req: Request, res: Response): Promise<void> {
     try {
-      const submissionId = Number(req.params.id);
-      const userId = req.body.userId; // In a real app, this would come from auth middleware
+      const projectId = Number(req.params.id);
+      const hackerId = req.body.hackerId; // In a real app, this would come from auth middleware
       
       const { ratings, comment } = req.body;
       
@@ -111,8 +111,7 @@ class HackathonController {
         return;
       }
       
-      const review = await HackathonModel.createReview(submissionId, userId, {
-        date: new Date().toISOString(),
+      const review = await HackathonModel.createReview(projectId, hackerId, {
         ratings,
         comment,
       });
